@@ -1,28 +1,3 @@
-<?php
-include 'db-conn.php';
-
-if (isset($_POST['submit'])) {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $gender = $_POST['gender'];
-
-    $sql = "INSERT INTO users (id  ,first_name , last_name , email , gender) VALUES (NULL , '$first_name' , '$last_name' , '$email' , '$gender')";
-
-    $result = mysqli_query($conn , $sql);
-
-    if ($result) {
-        header("Location: index.php?msg=New record created successfully");
-    } else {
-        echo "Failed: " . mysqli_error($conn);
-    }
-}
-
-
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +17,59 @@ if (isset($_POST['submit'])) {
     </nav>
 
     <div class="container">
+      <?php
+      if (isset($_GET['msg'])) {
+        $msg = $_GET['msg'];
+        echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        '. $msg .'
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+      }
+      ?>
+        <a href="add_new.php" class="btn btn-dark mb-3">Add New </i></a>
+
+        <table class="table table-hover text-center">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+
+    include 'db-conn.php';
+    $sql = "SELECT * FROM users";
+    $result = mysqli_query($conn , $sql);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+      ?>
+      <tr>
+      <td><?php echo $row['id']; ?></td>
+      <td><?php echo $row['first_name']; ?></d>
+      <td><?php echo $row['last_name']; ?></td>
+      <td><?php echo $row['email']; ?></td>
+      <td><?php echo $row['gender']; ?></d>
+      <td>
+        <a href="edit.php?id=<?php echo $row['id'];?>" class="link-dark"><i class="fa-solid fa-pen-to-square fs-5 me-3"></i></a>
+        <a href="delete.php?id=<?php echo $row['id'];?>" class="link-dark"><i class="fa-solid fa-trash fs-5"></i></a>
+      </td>
+    </tr>
+
+      <?php
+  }
+    
+    ?>
+    
+  </tbody>
+</table>
+    </div>
+
+    <!-- <div class="container">
         <div class="text-center mb-4">
             <h3>Add New User</h3>
             <p class="text-muted">Complete the form below to add a new user</p>
@@ -83,7 +111,7 @@ if (isset($_POST['submit'])) {
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 
     <!-- Bootstrap JS (Optional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
