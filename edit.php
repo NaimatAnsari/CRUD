@@ -1,5 +1,6 @@
 <?php
 include 'db-conn.php';
+$id = $_GET['id'];
 
 if (isset($_POST['submit'])) {
     $first_name = $_POST['first_name'];
@@ -7,7 +8,7 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $gender = $_POST['gender'];
 
-    $sql = "INSERT INTO users (id  ,first_name , last_name , email , gender) VALUES (NULL , '$first_name' , '$last_name' , '$email' , '$gender')";
+    $sql = "UPDATE users SET first_name = '$first_name' , last_name = '$last_name' , email = '$email' , gender = '$gender' WHERE id = $id";
 
     $result = mysqli_query($conn , $sql);
 
@@ -43,41 +44,51 @@ if (isset($_POST['submit'])) {
 
     <div class="container">
         <div class="text-center mb-4">
-            <h3>Add New User</h3>
-            <p class="text-muted">Complete the form below to add a new user</p>
+            <h3>Edit User Information</h3>
+            <p class="text-muted">Click update after changing any information</p>
         </div>
+
+            <?php
+                $id = $_GET['id'];
+                $sql = "SELECT * FROM users WHERE id=$id LIMIT 1";
+                $result = mysqli_query($conn , $sql);
+
+                $row = mysqli_fetch_assoc($result);
+            ?>
 
         <div class="container d-flex justify-content-center">
             <form action="" method="post" style="width:50vw; min-width:300px;">
                 <div class="row">
                     <div class="col">
                         <label class="form-label">First Name:</label>
-                        <input type="text" class="form-control" name="first_name" placeholder="Enter your first name" required>
+                        <input type="text" class="form-control" name="first_name" value="<?php echo $row['first_name'];?>" required>
                     </div>
 
                     <div class="col">
                         <label class="form-label">Last Name:</label>
-                        <input type="text" class="form-control" name="last_name" placeholder="Enter your last name"
+                        <input type="text" class="form-control" name="last_name" value="<?php echo $row['last_name'];?>"
                         required>
                     </div>
 
                     <div class="mb-3 mt-3">
                     <label class="form-label">Email:</label>
-                    <input type="email" class="form-control" name="email" placeholder="Enter your email"
+                    <input type="email" class="form-control" name="email" value="<?php echo $row['email'] ?>"
                     required>
                     </div>
 
                     <div class="form-group mb-3">
                         <label >Gender:</label>&nbsp;
-                        <input type="radio" class="form-check-input" name="gender" id="male" value="male" required>
+                        <input type="radio" class="form-check-input" name="gender" id="male" value="male" <?php echo ($row['gender'] == 'male') ? "checked" : ""  ?>
+                         required>
                         <label for="male" class="form-input-label">Male</label>
                         &nbsp;
-                        <input type="radio" class="form-check-input" name="gender" id="female" value="female" required>
+                        <input type="radio" class="form-check-input" name="gender" id="female" value="female" <?php echo ($row['gender'] == 'femmale') ? "checked" : ""  ?>
+                         required>
                         <label for="female" class="form-input-label">Female</label>
                     </div>
 
                     <div>
-                        <button type="submit" class="btn btn-success" name="submit">Save</button>
+                        <button type="submit" class="btn btn-success" name="submit">Update</button>
                         <a href="index.php" class="btn btn-danger">Cancel</a>
                     </div>  
                 </div>

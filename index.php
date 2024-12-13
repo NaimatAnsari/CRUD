@@ -46,10 +46,11 @@
     $sql = "SELECT * FROM users";
     $result = mysqli_query($conn , $sql);
 
+      $number = 1;
     while ($row = mysqli_fetch_assoc($result)) {
       ?>
       <tr>
-      <td><?php echo $row['id']; ?></td>
+      <td><?php echo $number; ?></td>
       <td><?php echo $row['first_name']; ?></d>
       <td><?php echo $row['last_name']; ?></td>
       <td><?php echo $row['email']; ?></td>
@@ -61,8 +62,8 @@
     </tr>
 
       <?php
+      $number++;
   }
-    
     ?>
     
   </tbody>
