@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 
 </head>
+<style>
+  .hover-red {
+    color: #FF4500;         /* Optional: Adjust text color */
+  }
+
+  .hover-green {
+    color: #3CB371;         /* Optional: Adjust text color */
+  }
+</style>
 <body>
     <nav class="navbar navbar-light justify-content-center fs-3 fw-bold mb-5" style="background-color: #00ff5573;">
     PHP CRUD Application
@@ -56,8 +65,8 @@
       <td><?php echo $row['email']; ?></td>
       <td><?php echo $row['gender']; ?></d>
       <td>
-        <a href="edit.php?id=<?php echo $row['id'];?>" class="link-dark"><i class="fa-solid fa-pen-to-square fs-5 me-3"></i></a>
-        <a href="delete.php?id=<?php echo $row['id'];?>" class="link-dark"><i class="fa-solid fa-trash fs-5"></i></a>
+        <a href="edit.php?id=<?php echo $row['id'];?>" class="link-dark"><i class="fa-solid fa-pen-to-square fs-5 hover-green me-3" ></i></a>
+        <a href="delete.php?id=<?php echo $row['id'];?>" class="link-dark"><i class="fa-solid fa-trash fs-5 hover-red"></i></a>
       </td>
     </tr>
 
